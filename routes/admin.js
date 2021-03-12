@@ -1,16 +1,18 @@
 const path = require("path");
 
 const express = require("express");
-
+const companiesController = require("../controllers/companies");
 const router = express.Router();
 
-router.get("/add-product", (req, res, next) => {
-  res.sendFile(path.join(__dirname, "../", "views", "add-product.html"));
-});
+router.get("/get-companies", companiesController.getAllCompanies);
 
-router.post("/add-product", (req, res, next) => {
-  console.log(req.body);
-  res.redirect("/");
-});
+router.post("/add-product", companiesController.postACompany);
+
+router.put("/update-company/companyId", companiesController.EditProduct);
+
+router.delete(
+  "/delete-company/companyId",
+  companiesController.postDeleteCompany
+);
 
 module.exports = router;

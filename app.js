@@ -1,19 +1,21 @@
+const path = require("path");
+
 const express = require("express");
 const bodyParser = require("body-parser");
 
 const app = express();
 
+app.set("view engine", "pug");
+app.set("views", "views");
+
 const adminRoutes = require("./routes/admin");
 
-const shopRoutes = require("./routes/shop");
+const aboutRoutes = require("./routes/about-us");
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use("/admin", adminRoutes);
-app.use(shopRoutes);
+app.use(adminRoutes);
 
-app.use((req, res, next) => {
-  res.status(404).send("<h1>Page not found</h1>");
-});
+app.use(aboutRoutes);
 
 app.listen(7000, () => {
   console.log("server started on port 7000");
