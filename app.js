@@ -2,24 +2,55 @@ const path = require("path");
 
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const sequelize = require("./util/databse");
 
 const app = express();
 
 app.set("view engine", "pug");
 app.set("views", "views");
 
-const adminRoutes = require("./routes/admin");
+//const adminRoutes = require("./routes/admin");
 
 const aboutRoutes = require("./routes/about-us");
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(adminRoutes);
+//app.use(adminRoutes);
 
 app.use(aboutRoutes);
 
-app.listen(7000, () => {
-  console.log("server started on port 7000");
-});
+sequelize
+  .sync()
+  .then((result) => {
+    //console.log(result);
+    app.listen(7000);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+mongoose
+  .connect(
+    "mongodb+srv://Sushmita:db1234sss@cluster0.4hxov.mongodb.net/Sector?retryWrites=true&w=majority"
+  )
+  .then((result) => {
+    User.findOne().then((user) => {
+      if (!user) {
+        const user = new User({
+          name: "Sushmita",
+          email: "Sush@test.com",
+          Sector: {
+            companies: [],
+          },
+        });
+        user.save();
+      }
+    });
+    app.listen(3000);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 //--------------format2----------
 // const express = require("express");

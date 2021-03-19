@@ -1,7 +1,4 @@
-const Companies = [
-  { id: 1, name: google },
-  { id: 2, name: facebook },
-];
+const Companies = [];
 
 exports.getAllCompanies = (req, res, next) => {
   res.render("company", {
