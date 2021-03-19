@@ -30,9 +30,7 @@ sequelize
   });
 
 mongoose
-  .connect(
-    "mongodb+srv://Sushmita:db1234sss@cluster0.4hxov.mongodb.net/Sector?retryWrites=true&w=majority"
-  )
+  .connect("")
   .then((result) => {
     User.findOne().then((user) => {
       if (!user) {
