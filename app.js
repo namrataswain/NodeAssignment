@@ -27,6 +27,7 @@ app.set("views", "views");
 //const adminRoutes = require("./routes/admin");
 
 const aboutRoutes = require("./routes/about-us");
+const { Socket } = require("dgram");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 //app.use(adminRoutes);
@@ -76,7 +77,11 @@ app.use((req, res, next) => {
 mongoose
   .connect(MONGODB_URI)
   .then((result) => {
-    app.listen(3000);
+    const server = app.listen(3000);
+    const io = require("socket.io")(server);
+    io.on("connection", (Socket) => {
+      console.log("client connected");
+    });
   })
   .catch((err) => {
     console.log(err);
